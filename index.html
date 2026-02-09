@@ -3,60 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Video Library</title>
+    <title>Video Library</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         .description-text { white-space: pre-wrap; }
+        .yt-red { background-color: #ff0000; }
     </style>
 </head>
 <body class="bg-zinc-950 text-zinc-100 font-sans">
 
     <header class="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800 p-4">
         <div class="max-w-5xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-2 text-xl font-bold tracking-tighter text-blue-500">
+            <div class="flex items-center gap-2 text-xl font-bold tracking-tighter text-blue-500 hover:opacity-80 cursor-pointer">
                 <i data-lucide="play-circle"></i>
                 <span>VIDEO LIBRARY</span>
             </div>
-            <div class="text-xs text-zinc-500">管理者モード</div>
+            <div class="flex items-center gap-4">
+                <button onclick="alert('あいことばを確認しました')" class="text-zinc-600 hover:text-zinc-400">
+                    <i data-lucide="lock" class="w-5 h-5"></i>
+                </button>
+            </div>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto p-6 space-y-12">
+    <main class="max-w-4xl mx-auto p-4 md:p-6 space-y-8">
         
-        <div class="bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl">
-            <video controls class="w-full aspect-video bg-black">
-                <source src="videos/sample.mp4" type="video/mp4">
-                ブラウザが対応していません。
-            </video>
+        <div class="bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl">
+            <div class="aspect-video bg-black relative">
+                <video controls class="w-full h-full">
+                    <source src="videos/sample.mp4" type="video/mp4">
+                    ブラウザが対応していません。
+                </video>
+            </div>
             
             <div class="p-6">
-                <h2 class="text-2xl font-bold mb-2">ここに動画のタイトル</h2>
-                <div class="flex items-center gap-6 text-zinc-400 text-sm mb-4">
-                    <span>2026/02/09 投稿</span>
-                    <span class="flex items-center gap-1"><i data-lucide="thumbs-up" class="w-4 h-4"></i> 10 Good</span>
+                <h2 class="text-2xl font-bold mb-3 leading-tight">アドオン紹介・テスト動画</h2>
+                
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-zinc-700 rounded-full flex items-center justify-center font-bold text-blue-500">K</div>
+                        <div>
+                            <p class="font-bold text-sm">くまさんの素材屋</p>
+                            <p class="text-xs text-zinc-500">2026/02/09 投稿</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button class="bg-zinc-800 hover:bg-zinc-700 px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition">
+                            <i data-lucide="thumbs-up" class="w-4 h-4"></i> 10
+                        </button>
+                        <a href="https://www.youtube.com/channel/UCVMhSwMzJRbaMsvHdsCgu1g" target="_blank" class="yt-red hover:opacity-90 px-6 py-2 rounded-full text-sm font-bold transition">
+                            チャンネル登録
+                        </a>
+                    </div>
                 </div>
                 
-                <hr class="border-zinc-800 my-4">
-                
-                <h3 class="text-sm font-bold text-zinc-500 mb-2 uppercase tracking-widest">概要欄</h3>
-                <p class="description-text text-zinc-300 leading-relaxed">
-ここに動画の説明を書きます。
-改行もそのまま反映されます。
+                <div class="bg-zinc-800/50 rounded-xl p-4">
+                    <h3 class="text-xs font-bold text-zinc-400 mb-2 uppercase tracking-widest">概要欄</h3>
+                    <p class="description-text text-zinc-200 text-sm leading-relaxed">
+YouTube➡ <a href="https://www.youtube.com/channel/UCVMhSwMzJRbaMsvHdsCgu1g" target="_blank" class="text-blue-400 hover:underline">公式チャンネルを見る</a>
 
+配布サイト➡ <a href="https://kumasannosozaiya.studio.site/" target="_blank" class="text-blue-400 hover:underline">こちらからダウンロード</a>
+
+---------------------------------------
 【重要ルール】
-このアドオンはMODBAYとMCPEDL専用です。許可なく他のサイトに公開してはいけません。
-                </p>
+このアドオンはMODBAYとMCPEDL専用です。
+許可なく他のサイトに公開してはいけません。
+                    </p>
+                </div>
             </div>
         </div>
 
     </main>
 
-    <footer class="p-10 text-center text-zinc-600 text-xs border-t border-zinc-900 mt-20">
-        &copy; 2026 My Video Library. Authorized for MODBAY & MCPEDL only.
+    <footer class="p-10 text-center text-zinc-600 text-[10px] border-t border-zinc-900 mt-20 uppercase tracking-tighter">
+        &copy; 2026 VIDEO LIBRARY | AUTHORIZED FOR MODBAY & MCPEDL ONLY | NO UNAUTHORIZED REPOSTING
     </footer>
 
     <script>
+        // アイコンを起動
         lucide.createIcons();
     </script>
 </body>
