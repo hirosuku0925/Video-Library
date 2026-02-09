@@ -3,67 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Library</title>
+    <title>Video Library - YouTube風</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         .description-text { white-space: pre-wrap; }
         .yt-red { background-color: #ff0000; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: #3f3f3f; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-zinc-950 text-zinc-100 font-sans">
+<body class="bg-[#0f0f0f] text-white font-sans">
 
-    <header class="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800 p-4">
-        <div class="max-w-5xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-2 text-xl font-bold tracking-tighter text-blue-500 hover:opacity-80 cursor-pointer">
-                <i data-lucide="play-circle"></i>
-                <span>VIDEO LIBRARY</span>
-            </div>
-            <div class="flex items-center gap-4">
-                <button onclick="alert('あいことばを確認しました')" class="text-zinc-600 hover:text-zinc-400">
-                    <i data-lucide="lock" class="w-5 h-5"></i>
-                </button>
+    <nav class="fixed top-0 w-full bg-[#0f0f0f] flex items-center justify-between px-4 h-14 z-50">
+        <div class="flex items-center gap-4">
+            <button class="p-2 hover:bg-zinc-800 rounded-full"><i data-lucide="menu"></i></button>
+            <div class="flex items-center gap-1 text-xl font-bold tracking-tighter cursor-pointer">
+                <i data-lucide="play" class="fill-red-600 text-red-600 w-8 h-8"></i>
+                <span>YouTube<span class="text-[10px] align-top ml-1 font-thin text-zinc-400">JP</span></span>
             </div>
         </div>
-    </header>
-
-    <main class="max-w-4xl mx-auto p-4 md:p-6 space-y-8">
         
-        <div class="bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl">
-            <div class="aspect-video bg-black relative">
-                <video controls class="w-full h-full">
-                    <source src="videos/sample.mp4" type="video/mp4">
-                    ブラウザが対応していません。
-                </video>
+        <div class="hidden md:flex items-center flex-1 max-w-[720px] ml-10">
+            <div class="flex w-full overflow-hidden border border-zinc-700 rounded-full ml-10 bg-zinc-900/50">
+                <input type="text" placeholder="検索" class="w-full bg-transparent px-4 py-2 outline-none focus:border-blue-500">
+                <button class="bg-zinc-800 px-5 border-l border-zinc-700 hover:bg-zinc-700">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </button>
             </div>
+            <button class="ml-4 p-2 bg-zinc-800 hover:bg-zinc-700 rounded-full"><i data-lucide="mic" class="w-5 h-5"></i></button>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <button class="p-2 hover:bg-zinc-800 rounded-full"><i data-lucide="video"></i></button>
+            <button class="p-2 hover:bg-zinc-800 rounded-full"><i data-lucide="bell"></i></button>
+            <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center font-bold text-sm">K</div>
+        </div>
+    </nav>
+
+    <div class="pt-14 flex">
+        
+        <aside class="hidden lg:block w-64 fixed left-0 h-[calc(100vh-56px)] overflow-y-auto p-3 space-y-2">
+            <div class="p-3 bg-zinc-800 rounded-xl flex items-center gap-5"><i data-lucide="home"></i> ホーム</div>
+            <div class="p-3 hover:bg-zinc-800 rounded-xl flex items-center gap-5"><i data-lucide="play-square"></i> Shorts</div>
+            <div class="p-3 hover:bg-zinc-800 rounded-xl flex items-center gap-5"><i data-lucide="clapperboard"></i> 登録チャンネル</div>
+            <hr class="border-zinc-800 my-2">
+            <div class="p-3 hover:bg-zinc-800 rounded-xl flex items-center gap-5 italic font-bold text-blue-500">Video Library</div>
+        </aside>
+
+        <main class="lg:ml-64 w-full p-4 md:p-6 lg:p-8 flex flex-col xl:flex-row gap-6">
             
-            <div class="p-6">
-                <h2 class="text-2xl font-bold mb-3 leading-tight">アドオン紹介・テスト動画</h2>
+            <div class="flex-1">
+                <div class="aspect-video bg-black rounded-xl overflow-hidden shadow-lg">
+                    <video controls autoplay class="w-full h-full">
+                        <source src="videos/sample.mp4" type="video/mp4">
+                        ブラウザが対応していません。
+                    </video>
+                </div>
                 
-                <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                <h1 class="text-xl font-bold mt-4 mb-2">この動画で使用している文字・フォントについて</h1>
+                
+                <div class="flex flex-wrap items-center justify-between gap-4 py-2 border-b border-transparent">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-zinc-700 rounded-full flex items-center justify-center font-bold text-blue-500">K</div>
-                        <div>
-                            <p class="font-bold text-sm">くまさんの素材屋</p>
-                            <p class="text-xs text-zinc-500">2026/02/09 投稿</p>
+                        <div class="w-10 h-10 bg-zinc-700 rounded-full flex items-center justify-center font-bold text-blue-400">K</div>
+                        <div class="mr-4">
+                            <p class="font-bold">くまさんの素材屋</p>
+                            <p class="text-xs text-zinc-400">チャンネル登録者数 1.2万人</p>
                         </div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <button class="bg-zinc-800 hover:bg-zinc-700 px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition">
-                            <i data-lucide="thumbs-up" class="w-4 h-4"></i> 10
-                        </button>
-                        <a href="https://www.youtube.com/channel/UCVMhSwMzJRbaMsvHdsCgu1g" target="_blank" class="yt-red hover:opacity-90 px-6 py-2 rounded-full text-sm font-bold transition">
+                        <a href="https://www.youtube.com/channel/UCVMhSwMzJRbaMsvHdsCgu1g" target="_blank" class="bg-white text-black px-4 py-2 rounded-full text-sm font-bold hover:bg-zinc-200">
                             チャンネル登録
                         </a>
                     </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <div class="flex bg-zinc-800 rounded-full overflow-hidden">
+                            <button class="px-4 py-2 hover:bg-zinc-700 border-r border-zinc-700 flex items-center gap-2">
+                                <i data-lucide="thumbs-up" class="w-5 h-5"></i> 10
+                            </button>
+                            <button class="px-4 py-2 hover:bg-zinc-700">
+                                <i data-lucide="thumbs-down" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                        <button class="bg-zinc-800 hover:bg-zinc-700 px-4 py-2 rounded-full flex items-center gap-2">
+                            <i data-lucide="share-2" class="w-5 h-5"></i> 共有
+                        </button>
+                    </div>
                 </div>
-                
-                <div class="bg-zinc-800/50 rounded-xl p-4">
-                    <h3 class="text-xs font-bold text-zinc-400 mb-2 uppercase tracking-widest">概要欄</h3>
-                    <p class="description-text text-zinc-200 text-sm leading-relaxed">
-YouTube➡ <a href="https://www.youtube.com/channel/UCVMhSwMzJRbaMsvHdsCgu1g" target="_blank" class="text-blue-400 hover:underline">公式チャンネルを見る</a>
 
-配布サイト➡ <a href="https://kumasannosozaiya.studio.site/" target="_blank" class="text-blue-400 hover:underline">こちらからダウンロード</a>
+                <div class="bg-zinc-800 hover:bg-zinc-700/80 transition rounded-xl p-3 mt-4 cursor-pointer">
+                    <p class="font-bold text-sm mb-1">1,234 回視聴  2026/02/09</p>
+                    <p class="description-text text-sm">
+YouTube➡ <a href="https://www.youtube.com/channel/UCVMhSwMzJRbaMsvHdsCgu1g" target="_blank" class="text-blue-400 hover:underline">公式チャンネルを確認する</a>
+
+配布サイト➡ <a href="https://kumasannosozaiya.studio.site/" target="_blank" class="text-blue-400 hover:underline">文字・素材をダウンロード</a>
 
 ---------------------------------------
 【重要ルール】
@@ -72,16 +104,21 @@ YouTube➡ <a href="https://www.youtube.com/channel/UCVMhSwMzJRbaMsvHdsCgu1g" ta
                     </p>
                 </div>
             </div>
-        </div>
 
-    </main>
-
-    <footer class="p-10 text-center text-zinc-600 text-[10px] border-t border-zinc-900 mt-20 uppercase tracking-tighter">
-        &copy; 2026 VIDEO LIBRARY | AUTHORIZED FOR MODBAY & MCPEDL ONLY | NO UNAUTHORIZED REPOSTING
-    </footer>
+            <div class="w-full xl:w-[400px] space-y-4">
+                <div class="flex gap-2">
+                    <div class="w-40 aspect-video bg-zinc-800 rounded-lg flex-shrink-0"></div>
+                    <div>
+                        <p class="text-sm font-bold line-clamp-2">次のおすすめ動画のタイトル...</p>
+                        <p class="text-xs text-zinc-400 mt-1">くまさんの素材屋</p>
+                        <p class="text-xs text-zinc-400">1.5万回視聴 • 1日前</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 
     <script>
-        // アイコンを起動
         lucide.createIcons();
     </script>
 </body>
