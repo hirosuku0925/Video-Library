@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>よく噛んで食べる</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background-color: #fff9e6; color: #333; padding: 20px; }
+        .container { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h1 { color: #ff9800; font-size: 24px; }
+        .visualizer { width: 100px; height: 100px; background: #ffeb3b; border-radius: 50%; margin: 20px auto; display: flex; align-items: center; justify-content: center; font-size: 2em; transition: transform 0.1s; }
+        .active { transform: scale(1.2); background: #ff9800; color: white; }
+        .settings { text-align: left; margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px; }
+        label { display: block; margin: 10px 0 5px; font-weight: bold; }
+        input { width: 100%; }
+        button { width: 100%; padding: 15px; margin-top: 20px; border: none; border-radius: 10px; font-size: 18px; cursor: pointer; }
+        .start-btn { background-color: #4caf50; color: white; }
+        .stop-btn { background-color: #f44336; color: white; }
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); color: white; display: flex; align-items: center; justify-content: center; z-index: 100; }
+        .modal { background: white; color: #333; padding: 20px; width: 80%; border-radius: 10px; text-align: left; }
+    </style>
+</head>
+<body>
+
+<div id="overlay">
+    <div class="modal">
+        <h3>⚠️ ご利用の前に</h3>
+        <p>本アプリは食事のリズムを補助するものですが、喉への詰まりを完全に防ぐものではありません。</p>
+        <p><b>・食材の大きさは適切にカットしてください<br>・食事中は必ず保護者が付き添ってください</b></p>
+        <p>万が一の事故について、当アプリは責任を負いかねます。ご了承の上お使いください。</p>
+        <button onclick="acceptTerms()" class="start-btn">同意してはじめる</button>
+    </div>
+</div>
+
+<div class="container">
+    <h1>もぐもぐリズム</h1>
+    <div id="visualizer" class="visualizer">🦴</div>
+    <div id="counter">残り: -- 回</div>
+
+    <div class="settings">
+        <label>噛む回数: <span id="countVal">30</span>回</label>
+        <input type="range" id="countInput" min="5" max="50" value="30" oninput="updateLabel()">
+        
+        <label>速さ (1回あたりの秒数): <span id="speedVal">0.8</span>秒</label>
+        <input type="range" id="speedInput" min="0.5" max="2.0" step="0.1" value="0.8" oninput="updateLabel()">
+    </div>
+
+    <button id="mainBtn" class="start-btn" onclick="toggleApp()">スタート！</button>
+</div>
+
+<script>
+    let timer = null;
+    let currentCount = 0;
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function updateLabel() {
+        document.getElementById('countVal').innerText = document.getElementById('countInput').value;
+        document.getElementById('speedVal').innerText = document.getElementById('speedInput').value;
+    }
+
+    function beep() {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = 'sine';
+        osc.frequency.value = 880;
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.1);
+    }
+
+    function toggleApp() {
+        const btn = document.getElementById('mainBtn');
+        if (timer) {
+            stop();
+            btn.innerText = "スタート！";
+            btn.className = "start-btn";
+        } else {
+            start();
+            btn.innerText = "ストップ";
+            btn.className = "stop-btn";
+        }
+    }
+
+    function start() {
+        currentCount = parseInt(document.getElementById('countInput').value);
+        const interval = parseFloat(document.getElementById('speedInput').value) * 1000;
+        
+        timer = setInterval(() => {
+            if (currentCount <= 0) {
+                stop();
+                alert("よく噛めました！");
+                document.getElementById('mainBtn').innerText = "スタート！";
+                document.getElementById('mainBtn').className = "start-btn";
+                return;
+            }
+            beep();
+            animateVisualizer();
+            document.getElementById('counter').innerText = `残り: ${currentCount} 回`;
+            currentCount--;
+        }, interval);
+    }
+
+    function stop() {
+        clearInterval(timer);
+        timer = null;
+        document.getElementById('counter').innerText = "残り: -- 回";
+    }
+
+    function animateVisualizer() {
+        const v = document.getElementById('visualizer');
+        v.classList.add('active');
+        v.innerText = "😋";
+        setTimeout(() => {
+            v.classList.remove('active');
+            v.innerText = "🦴";
+        }, 100);
+    }
+
+    function acceptTerms() {
+        document.getElementById('overlay').style.display = 'none';
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+    }
+</script>
+</body>
+</html>
